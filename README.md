@@ -23,6 +23,7 @@
 * activity_lables.txt
    * Length of file is 6 lines.
    * These must correspond to the number of actions in the y_*.txt files.
+
 ### Operations
 * For the "test and "train" data
    * Read the data file (test/X_test.txt and train/X_train.txt) into a data frame
