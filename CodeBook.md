@@ -213,14 +213,29 @@
 * The value has been normalized to between -1 and 1
 
 ## tBodyAccJerkMag-std()
+* The accelerometer 3-axial linear body acceleration magnitude
+* The value is a mean of all linear body acceleration magnitude relate to a single combination of subj_id and activity_name.
+* The value has been normalized to between -1 and 1
 
 ## tBodyGyroMag-mean()
+* The gyroscope 3-axial raw signal magnitude
+* The value is a mean of all signal magnitudes relate to a single combination of subj_id and activity_name.
+* The value has been normalized to between -1 and 1
 
 ## tBodyGyroMag-std()
+* The gyroscope 3-axial raw signal magnitude standard deviation
+* The value is a mean of all signal magnitude standard deviations relate to a single combination of subj_id and activity_name.
+* The value has been normalized to between -1 and 1
 
 ## tBodyGyroJerkMag-mean()
+* The gyroscope 3-axial angular velocity magnitude
+* The value is a mean of all angular velocity magnitudes relate to a single combination of subj_id and activity_name.
+* The value has been normalized to between -1 and 1
 
 ## tBodyGyroJerkMag-std()
+* The gyroscope 3-axial angular velocity magnitude standard deviation
+* The value is a mean of all angular velocity magnitude standard deviation relate to a single combination of subj_id and activity_name.
+* The value has been normalized to between -1 and 1
 
 ## fBodyAcc-mean()-X
 
