@@ -48,6 +48,6 @@
 * The tidy data will consist of the average value of each measurement classified by subject ID and activity name.
    * For each subject ID and activity name combination, create an average for each column measurement in the data frame from the Second Operation.
    * For example, there are about 95 rows with subject ID of 1 and activity of "WALKING"
-   * The tidy data set will have one line with an average from each column of 95 values.
+   * The tidy data set in the above case will have one line with an average from each column of 95 values.
 * The tidy data set will be written to tidydata.txt and uploaded to Github.
 * This final step satisfies Step 5 of the Class Project
