@@ -1,3 +1,8 @@
+# Note to readers of this script.  The whole script is invoked by the
+#   run_analysis() function at the end of this script.  Users of the script
+#   should "source()" this file and run run_analysis() in the top level
+#   working directory containing the unzip Samsung phone data.
+
 # Prepares a data frame that contains a test set for the "Human
 #    Activity Recognition Using Smartphones Dataset".  The assumption
 #    is that this function is run with the working directory set as
@@ -47,8 +52,20 @@ prepare_df <- function(type) {
     alldata <- cbind(subj_id = subj_ids, activity_name = activity_names, X_data)
 }
 
-# Pull all means and standard deviations from full data
+# Pull all means and standard deviations from full data.
+# All variable names were pulled from feature_info.txt and hard-coded into
+#   the measurements character vector.  Each variable has multiple measurements
+#   associated with it, including the average and standard deviation.  The
+#   average has a "-mean()" suffix to its measurment header while the 
+#   standard deviation has a "std()" suffix.  If the measuremnt doesn't have
+#   "Mag" in its header, there are X, Y and Z measurements to indicate
+#   movement on the X, Y and Z axis.  These headers have an additional "-X", 
+#   "-Y" and "-Z" suffix.
+# All other measurements included with the data set are ignored
+#
 # Note to graders: This function satisfies Step 2 of the Class Project
+# Step 2: Extracts only the measurements on the mean and standard deviation for each measurement.
+#
 pull_mean_std <- function(full_data) {
     # The following measurement names were derived from feature_info.txt
     # Note that in feature_info.txt, "fBodyAccJerkMag", "fBodyGyroMag"
@@ -61,10 +78,16 @@ pull_mean_std <- function(full_data) {
                       # The feature_info.txt file implied these measurements
                       # existed but they don't
                       #"fBodyAccJerkMag", "fBodyGyroMag", "fBodyGyroJerkMag")
+    # new_data will only contain the relavent measurements for this
+    #   class project
     new_data = data.frame(full_data[,"subj_id"])
+    # new_names will contain the data frame headers for new_data
     new_names = c("subj_id")
     new_data = cbind(new_data, full_data[,"activity_name"])
     new_names = c(new_names, "activity_name")
+    # At this point, new_data has a column for the subject ID and another
+    #   column for the activity_name.  The following code adds the
+    #   average and standard deviation for each of the measurements
     for (m in measurements) {
         if (length(grep("Mag", c(m))) > 0) {
             # Each of the "Mag" measurements have a mean and standard
@@ -87,10 +110,22 @@ pull_mean_std <- function(full_data) {
             }
         }
     }
+    # Finally, add the column names to the new data frame
     colnames(new_data) <- new_names
     new_data
 }
 
+# Calculate the averages of the measurements for each subjects activity.
+#   For example, subject ID #1 has 95 observations for each measurement while
+#   "WALKING".  Take the average for the 95 observations and collapse the 
+#   95 to one average observation per measurement.  The output will be the
+#   average per subject activity (30 subjects with 6 activities = 180
+#   average observations)
+#
+# Note to graders: This function satisfies Step 5 of the class project
+# Step 5: From the data set in step 4, creates a second, independent 
+#   tidy data set with the average of each variable for each activity 
+#   and each subject.
 calc_averages <- function(df) {
     avedf = data.frame(matrix(ncol = ncol(df)-1, nrow = 0))
     act_factors <- attributes(df$activity_name)
@@ -98,7 +133,13 @@ calc_averages <- function(df) {
     for (id in unique(df$subj_id)) {
         for (activity in unique(df$activity_name)) {
             print(paste("Finding averages for subject ", id, " performing ", activity))
+            # Get the data frame subset that only includes the subject
+            #   performing a certain activity
             subdf <- subset(df, subj_id == id & activity_name == activity)
+            # Note below that column 2 (activity_name) is skipped
+            #   This is because rbind() chokes when trying to append to the 
+            #   data frame.  The reason is due to rbind() and factors.
+            #   For now, collect the activities in a separate vector
             avelist <- list(subj_id = id)
             for (n in 3:ncol(subdf)) {
                 avelist[n-1] <- mean(subdf[,n])
@@ -109,6 +150,8 @@ calc_averages <- function(df) {
             avedf <- rbind(avedf, avelist)
         }
     }
+    # Create the final data frame.  Note that the activity_name column is
+    #   finally added here.
     avedf <- cbind(avedf[1], activity_name = act_vec, avedf[2:ncol(avedf)])
 }
 
