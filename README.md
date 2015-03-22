@@ -35,3 +35,19 @@
    * Merge the two new columns to the data frame
 * After retrieving the "test" and "train" data, merge them together.  
 * This satisfies Step 1, Step 3 and Step 4 of the Class Project
+
+## Second Operation: Pull out the data that corresponds to average and standard deviation
+* In features_info.txt, there is a list of variables
+   * Each corresponds to a prefix in some headers
+   * For each variable, there is a mean() and std() suffix for average and standard deviation respectfully
+   * Pull out the columns that correspond to those headers from the data frame created in "First Operation"
+   * Create a new data frame from the pulled columns along with the subject ID and activity columns
+* This step satisfies Step 2 of the Class Project
+
+## Third Operation: Create tidy data from Second Operation data frame
+* The tidy data will consist of the average value of each measurement classified by subject ID and activity name.
+   * For each subject ID and activity name combination, create an average for each column measurement in the data frame from the Second Operation.
+   * For example, there are about 95 rows with subject ID of 1 and activity of "WALKING"
+   * The tidy data set will have one line with an average from each column of 95 values.
+* The tidy data set will be written to tidydata.txt and uploaded to Github.
+* This final step satisfies Step 5 of the Class Project
